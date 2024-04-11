@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/zSecondary"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/head_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zac"
+        android:textSize="38sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/zPrimary"
+        android:layout_marginTop="200dp"
+        />
+
+    <EditText
+        android:id="@+id/edt_des"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/head_txt"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Description"
+        android:background="@drawable/edt_des"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:gravity="start"
+        />
+
+    <Button
+        android:id="@+id/btnMin"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_des"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Minimize"
+        android:textColor="@color/black"
+        android:background="@drawable/btn_background"
+        android:textSize="20sp"
+        />
+
+</RelativeLayout>
