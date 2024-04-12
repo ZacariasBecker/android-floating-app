@@ -18,13 +18,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.floatingwindowapp.Common.Companion.currDes
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var dialog: AlertDialog
     private lateinit var btnMin: Button
-    private lateinit var edtDes: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,27 +35,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnMin = findViewById(R.id.btnMin)
-        edtDes = findViewById(R.id.edt_des)
 
         if(isServiceRunning()){
             stopService(Intent(this@MainActivity,FloatingWindowApp::class.java))
         }
-
-        edtDes.setText(currDes)
-        edtDes.setSelection(edtDes.text.toString().length)
-
-        edtDes.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                currDes = edtDes.text.toString()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-        })
 
         btnMin.setOnClickListener{
             if(checkOverlayPermission()){

@@ -16,7 +16,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
-import com.example.floatingwindowapp.Common.Companion.currDes
 
 class FloatingWindowApp : Service(){
 
@@ -24,7 +23,6 @@ class FloatingWindowApp : Service(){
     private lateinit var floatWindowLayoutParams: WindowManager.LayoutParams
     private var LAYOUT_TYPE: Int? = null
     private lateinit var windowManager: WindowManager
-    private lateinit var edtDes: EditText
     private lateinit var btnMax: Button
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -45,11 +43,6 @@ class FloatingWindowApp : Service(){
         floatView = inflater.inflate(R.layout.floating_layout,null) as ViewGroup
 
         btnMax = floatView.findViewById(R.id.btnMax)
-        edtDes = floatView.findViewById(R.id.edt_des)
-
-        edtDes.setText(currDes)
-        edtDes.setSelection(edtDes.text.toString().length)
-        edtDes.isCursorVisible = false
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             LAYOUT_TYPE = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
@@ -59,8 +52,8 @@ class FloatingWindowApp : Service(){
         }
 
         floatWindowLayoutParams = WindowManager.LayoutParams(
-            (width * 0.55f).toInt(),
-            (height * 0.55f).toInt(),
+            (500).toInt(),
+            (500).toInt(),
             LAYOUT_TYPE!!,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
@@ -81,19 +74,6 @@ class FloatingWindowApp : Service(){
 
             startActivity(back)
         }
-
-        edtDes.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                currDes = edtDes.text.toString()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-        })
 
         floatView.setOnTouchListener(object :View.OnTouchListener{
 
@@ -122,18 +102,6 @@ class FloatingWindowApp : Service(){
                         windowManager.updateViewLayout(floatView,updatedFloatWindowLayoutParam)
                     }
                 }
-                return false
-            }
-        })
-
-        edtDes.setOnTouchListener(object : View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-               edtDes.isCursorVisible = true
-                val updatedFloatParamsFlag = floatWindowLayoutParams
-                updatedFloatParamsFlag.flags =
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-
-                windowManager.updateViewLayout(floatView,updatedFloatParamsFlag)
                 return false
             }
         })
