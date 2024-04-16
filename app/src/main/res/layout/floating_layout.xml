@@ -1,31 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/zSecondary">
+    android:background="@color/zSecondary"
+    >
 
-    <Button
-        android:id="@+id/btnMax"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/head_txt"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="Maximize"
-        android:textColor="@color/black"
-        android:background="@drawable/btn_background"
-        />
 
     <Button
         android:id="@+id/btnUp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnMax"
         android:layout_centerHorizontal="true"
-        android:text="+"
+        android:text="@string/btnUp"
         android:textColor="@color/black"
         android:background="@drawable/btn_background"
         android:textSize="30sp"
@@ -37,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btnUp"
         android:layout_centerHorizontal="true"
-        android:text="-"
+        android:text="@string/btnDown"
         android:textColor="@color/black"
         android:background="@drawable/btn_background"
         android:textSize="30sp"

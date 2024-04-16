@@ -2,7 +2,6 @@ package com.example.floatingwindowapp
 
 import android.app.ActivityManager
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -10,10 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Button
-import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -61,8 +57,6 @@ class MainActivity : AppCompatActivity() {
         btnDown.setOnClickListener {
             audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI)
         }
-
-
     }
 
     private fun isServiceRunning():Boolean{

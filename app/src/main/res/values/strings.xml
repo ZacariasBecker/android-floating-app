@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FloatingWindowApp</string>
+    <string name="btnDown">-</string>
+    <string name="btnUp">+</string>
 </resources>

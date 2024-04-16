@@ -7,17 +7,13 @@ import android.graphics.PixelFormat
 import android.media.AudioManager
 import android.os.Build
 import android.os.IBinder
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.EditText
 
 class FloatingWindowApp : Service(){
 
@@ -25,7 +21,6 @@ class FloatingWindowApp : Service(){
     private lateinit var floatWindowLayoutParams: WindowManager.LayoutParams
     private var LAYOUT_TYPE: Int? = null
     private lateinit var windowManager: WindowManager
-    private lateinit var btnMax: Button
     private lateinit var btnUp: Button
     private lateinit var btnDown: Button
 
@@ -36,28 +31,20 @@ class FloatingWindowApp : Service(){
     override fun onCreate() {
         super.onCreate()
 
-        val metrics = applicationContext.resources.displayMetrics
-        val width = metrics.widthPixels
-        val height = metrics.heightPixels
-
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
         val inflater = baseContext.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         floatView = inflater.inflate(R.layout.floating_layout,null) as ViewGroup
 
-        btnMax = floatView.findViewById(R.id.btnMax)
         btnUp = floatView.findViewById(R.id.btnUp)
         btnDown = floatView.findViewById(R.id.btnDown)
         val audioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
-
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            LAYOUT_TYPE = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-        }
-        else{
-            LAYOUT_TYPE = WindowManager.LayoutParams.TYPE_TOAST
+        LAYOUT_TYPE = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+        } else{
+            WindowManager.LayoutParams.TYPE_TOAST
         }
 
         floatWindowLayoutParams = WindowManager.LayoutParams(
@@ -73,16 +60,6 @@ class FloatingWindowApp : Service(){
         floatWindowLayoutParams.y = 0
 
         windowManager.addView(floatView,floatWindowLayoutParams)
-
-        btnMax.setOnClickListener{
-            stopSelf()
-            windowManager.removeView(floatView)
-
-            val back = Intent(this@FloatingWindowApp, MainActivity::class.java)
-            back.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
-            startActivity(back)
-        }
 
         btnUp.setOnClickListener {
             audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI)
@@ -108,8 +85,8 @@ class FloatingWindowApp : Service(){
                         x = updatedFloatWindowLayoutParam.x.toDouble()
                         y = updatedFloatWindowLayoutParam.y.toDouble()
 
-                        px = event.rawX.toDouble();
-                        py = event.rawY.toDouble();
+                        px = event.rawX.toDouble()
+                        py = event.rawY.toDouble()
                     }
 
                     MotionEvent.ACTION_MOVE -> {
