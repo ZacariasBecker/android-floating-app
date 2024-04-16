@@ -25,8 +25,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dialog: AlertDialog
     private lateinit var btnMin: Button
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,8 +37,8 @@ class MainActivity : AppCompatActivity() {
 
         btnMin = findViewById(R.id.btnMin)
 
-        val upBtn = findViewById<Button>(R.id.btnUp)
-        val downBtn = findViewById<Button>(R.id.btnDown)
+        val btnUp = findViewById<Button>(R.id.btnUp)
+        val btnDown = findViewById<Button>(R.id.btnDown)
         val audioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
         if(isServiceRunning()){
@@ -56,15 +54,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // At the click of upBtn
-        upBtn.setOnClickListener {
-            // ADJUST_RAISE = Raise the volume, FLAG_SHOW_UI = show changes made to volume bar
+        btnUp.setOnClickListener {
             audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI)
         }
 
-        // At the click of downBtn
-        downBtn.setOnClickListener {
-            // ADJUST_LOWER = LOWER the volume, FLAG_SHOW_UI = show changes made to volume bar
+        btnDown.setOnClickListener {
             audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI)
         }
 

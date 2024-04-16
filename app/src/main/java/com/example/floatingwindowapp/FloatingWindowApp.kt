@@ -1,8 +1,10 @@
 package com.example.floatingwindowapp
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
+import android.media.AudioManager
 import android.os.Build
 import android.os.IBinder
 import android.text.Editable
@@ -24,6 +26,8 @@ class FloatingWindowApp : Service(){
     private var LAYOUT_TYPE: Int? = null
     private lateinit var windowManager: WindowManager
     private lateinit var btnMax: Button
+    private lateinit var btnUp: Button
+    private lateinit var btnDown: Button
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -43,6 +47,11 @@ class FloatingWindowApp : Service(){
         floatView = inflater.inflate(R.layout.floating_layout,null) as ViewGroup
 
         btnMax = floatView.findViewById(R.id.btnMax)
+        btnUp = floatView.findViewById(R.id.btnUp)
+        btnDown = floatView.findViewById(R.id.btnDown)
+        val audioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             LAYOUT_TYPE = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
@@ -52,7 +61,7 @@ class FloatingWindowApp : Service(){
         }
 
         floatWindowLayoutParams = WindowManager.LayoutParams(
-            (500).toInt(),
+            (100).toInt(),
             (500).toInt(),
             LAYOUT_TYPE!!,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
@@ -73,6 +82,14 @@ class FloatingWindowApp : Service(){
             back.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
             startActivity(back)
+        }
+
+        btnUp.setOnClickListener {
+            audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI)
+        }
+
+        btnDown.setOnClickListener {
+            audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI)
         }
 
         floatView.setOnTouchListener(object :View.OnTouchListener{
