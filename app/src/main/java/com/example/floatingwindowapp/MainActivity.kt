@@ -18,11 +18,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.media.AudioManager
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var dialog: AlertDialog
     private lateinit var btnMin: Button
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +39,10 @@ class MainActivity : AppCompatActivity() {
 
         btnMin = findViewById(R.id.btnMin)
 
+        val upBtn = findViewById<Button>(R.id.btnUp)
+        val downBtn = findViewById<Button>(R.id.btnDown)
+        val audioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
         if(isServiceRunning()){
             stopService(Intent(this@MainActivity,FloatingWindowApp::class.java))
         }
@@ -48,6 +55,19 @@ class MainActivity : AppCompatActivity() {
                 requestFloatingWindowPermission()
             }
         }
+
+        // At the click of upBtn
+        upBtn.setOnClickListener {
+            // ADJUST_RAISE = Raise the volume, FLAG_SHOW_UI = show changes made to volume bar
+            audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI)
+        }
+
+        // At the click of downBtn
+        downBtn.setOnClickListener {
+            // ADJUST_LOWER = LOWER the volume, FLAG_SHOW_UI = show changes made to volume bar
+            audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI)
+        }
+
 
     }
 
